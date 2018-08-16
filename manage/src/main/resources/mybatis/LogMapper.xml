@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangy.manage.dao.LogMapper">
+    <resultMap id="BaseResultMap" type="com.yangy.common.entity.Log">
+        <result column="log_id" property="logId" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="desp" property="desp" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="method" property="method" jdbcType="VARCHAR"/>
+        <result column="menu" property="menu" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="ctime" property="ctime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        log_id,
+        username,
+        user_id,
+        desp,
+        ip,
+        type,
+        method,
+        menu,
+        url,
+        ctime
+    </sql>
+
+    <!--根据id查询-->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        WHERE log_id = #{recordId}
+    </select>
+
+
+    <!--根据条件查询-->
+    <select id="findByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        <if test="log !=null">
+            <where>
+                <if test="log.logId != null">AND log_id = #{log.logId}</if>
+                <if test="log.username != null and log.username !='' ">AND username like
+                    CONCAT('%',#{log.username},'%')
+                </if>
+                <if test="log.userId != null">AND user_id = #{log.userId}</if>
+                <if test="log.desp != null and log.desp !='' ">AND desp like CONCAT('%',#{log.desp},'%')</if>
+                <if test="log.ip != null and log.ip !='' ">AND ip like CONCAT('%',#{log.ip},'%')</if>
+                <if test="log.type != null and log.type !='' ">AND type like CONCAT('%',#{log.type},'%')</if>
+                <if test="log.method != null and log.method !='' ">AND method like CONCAT('%',#{log.method},'%')</if>
+                <if test="log.menu != null and log.menu !='' ">AND menu like CONCAT('%',#{log.menu},'%')</if>
+                <if test="log.url != null and log.url !='' ">AND url like CONCAT('%',#{log.url},'%')</if>
+                <if test="log.ctime != null">AND ctime = #{log.ctime}</if>
+            </where>
+        </if>
+        LIMIT 0,1
+    </select>
+
+
+    <!--根据id集合查询-->
+    <select id="findByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        <if test="log !=null">
+            <where>
+                <if test="log.logId != null">AND log_id = #{log.logId}</if>
+                <if test="log.username != null and log.username !='' ">AND username like
+                    CONCAT('%',#{log.username},'%')
+                </if>
+                <if test="log.userId != null">AND user_id = #{log.userId}</if>
+                <if test="log.desp != null and log.desp !='' ">AND desp like CONCAT('%',#{log.desp},'%')</if>
+                <if test="log.ip != null and log.ip !='' ">AND ip like CONCAT('%',#{log.ip},'%')</if>
+                <if test="log.type != null and log.type !='' ">AND type like CONCAT('%',#{log.type},'%')</if>
+                <if test="log.method != null and log.method !='' ">AND method like CONCAT('%',#{log.method},'%')</if>
+                <if test="log.menu != null and log.menu !='' ">AND menu like CONCAT('%',#{log.menu},'%')</if>
+                <if test="log.url != null and log.url !='' ">AND url like CONCAT('%',#{log.url},'%')</if>
+                <if test="log.ctime != null">AND ctime = #{log.ctime}</if>
+            </where>
+        </if>
+        <if test="pageInfo != null">
+            order by log_id desc
+            <if test="pageInfo.offset != null and pageInfo.pageSize != null">
+                LIMIT #{pageInfo.offset}, #{pageInfo.pageSize}
+            </if>
+        </if>
+    </select>
+
+
+    <!--根据参数分页查询-->
+    <select id="findByIdList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </select>
+
+
+    <!--根据条件计数-->
+    <select id="count" resultType="int">
+        SELECT
+        COUNT(id)
+        FROM sys_log
+        <where>
+            <if test="logId != null">AND log_id = #{logId}</if>
+            <if test="username != null and username !='' ">
+                AND username like CONCAT('%',#{username},'%')
+            </if>
+            <if test="userId != null">AND user_id = #{userId}</if>
+            <if test="desp != null and desp !='' ">
+                AND desp like CONCAT('%',#{desp},'%')
+            </if>
+            <if test="ip != null and ip !='' ">
+                AND ip like CONCAT('%',#{ip},'%')
+            </if>
+            <if test="type != null and type !='' ">
+                AND type like CONCAT('%',#{type},'%')
+            </if>
+            <if test="method != null and method !='' ">
+                AND method like CONCAT('%',#{method},'%')
+            </if>
+            <if test="menu != null and menu !='' ">
+                AND menu like CONCAT('%',#{menu},'%')
+            </if>
+            <if test="url != null and url !='' ">
+                AND url like CONCAT('%',#{url},'%')
+            </if>
+            <if test="ctime != null">AND ctime = #{ctime}</if>
+        </where>
+    </select>
+
+    <!--添加-->
+    <insert id="save" parameterType="com.yangy.common.entity.Log" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username !=''">
+                username,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="desp != null and desp !=''">
+                desp,
+            </if>
+            <if test="ip != null and ip !=''">
+                ip,
+            </if>
+            <if test="type != null and type !=''">
+                type,
+            </if>
+            <if test="method != null and method !=''">
+                method,
+            </if>
+            <if test="menu != null and menu !=''">
+                menu,
+            </if>
+            <if test="url != null and url !=''">
+                url,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username !=''">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="desp != null and desp !=''">
+                #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null and ip !=''">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type !=''">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null and method !=''">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="menu != null and menu !=''">
+                #{menu,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url !=''">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改-->
+    <update id="update" parameterType="com.yangy.common.entity.Log">
+        UPDATE sys_log
+        <set>
+            <if test="username != null and username !=''">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="desp != null and desp !=''">
+                desp = #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null and ip !=''">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type !=''">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null and method !=''">
+                method = #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="menu != null and menu !=''">
+                menu = #{menu,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url !=''">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=BIGINT},
+            </if>
+        </set>
+        WHERE log_id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="delById" parameterType="java.lang.Long">
+        DELETE FROM sys_log
+        WHERE log_id = #{id}
+    </delete>
+
+    <!--根据条件删除-->
+    <delete id="delByLog" parameterType="com.yangy.common.entity.Log">
+        DELETE FROM sys_log
+        WHERE log_id = #{recordId}
+    </delete>
+
+
+    <!--根据id集合删除-->
+    <delete id="delByIdList">
+        DELETE FROM sys_log
+        WHERE log_id IN
+        <foreach collection="idArr" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </delete>
+
+</mapper>

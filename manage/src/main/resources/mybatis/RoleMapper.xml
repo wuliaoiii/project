@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangy.manage.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.yangy.common.entity.Role">
+        <result column="rule_id" property="ruleId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="desp" property="desp" jdbcType="VARCHAR"/>
+        <result column="ctime" property="ctime" jdbcType="BIGINT"/>
+        <result column="orders" property="orders" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        rule_id,
+        name,
+        desp,
+        ctime,
+        orders
+    </sql>
+
+    <!--根据id查询-->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        WHERE rule_id = #{recordId}
+    </select>
+
+
+    <!--根据条件查询-->
+    <select id="findByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        <if test="role !=null">
+            <where>
+                <if test="role.ruleId != null">AND rule_id = #{role.ruleId}</if>
+                <if test="role.name != null and role.name !='' ">AND name like CONCAT('%',#{role.name},'%')</if>
+                <if test="role.desp != null and role.desp !='' ">AND desp like CONCAT('%',#{role.desp},'%')</if>
+                <if test="role.ctime != null">AND ctime = #{role.ctime}</if>
+                <if test="role.orders != null">AND orders = #{role.orders}</if>
+            </where>
+        </if>
+        LIMIT 0,1
+    </select>
+
+
+    <!--根据id集合查询-->
+    <select id="findByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        <if test="role !=null">
+            <where>
+                <if test="role.ruleId != null">AND rule_id = #{role.ruleId}</if>
+                <if test="role.name != null and role.name !='' ">AND name like CONCAT('%',#{role.name},'%')</if>
+                <if test="role.desp != null and role.desp !='' ">AND desp like CONCAT('%',#{role.desp},'%')</if>
+                <if test="role.ctime != null">AND ctime = #{role.ctime}</if>
+                <if test="role.orders != null">AND orders = #{role.orders}</if>
+            </where>
+        </if>
+        <if test="pageInfo != null">
+            order by rule_id desc
+            <if test="pageInfo.offset != null and pageInfo.pageSize != null">
+                LIMIT #{pageInfo.offset}, #{pageInfo.pageSize}
+            </if>
+        </if>
+    </select>
+
+
+    <!--根据参数分页查询-->
+    <select id="findByIdList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_role
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </select>
+
+
+    <!--根据条件计数-->
+    <select id="count" resultType="int">
+        SELECT
+        COUNT(id)
+        FROM sys_role
+        <where>
+            <if test="ruleId != null">AND rule_id = #{ruleId}</if>
+            <if test="name != null and name !='' ">
+                AND name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="desp != null and desp !='' ">
+                AND desp like CONCAT('%',#{desp},'%')
+            </if>
+            <if test="ctime != null">AND ctime = #{ctime}</if>
+            <if test="orders != null">AND orders = #{orders}</if>
+        </where>
+    </select>
+
+
+    <!--添加-->
+    <insert id="save" parameterType="com.yangy.common.entity.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                name,
+            </if>
+            <if test="desp != null and desp !=''">
+                desp,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="orders != null">
+                orders,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name !=''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null and desp !=''">
+                #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="orders != null">
+                #{orders,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改-->
+    <update id="update" parameterType="com.yangy.common.entity.Role">
+        UPDATE sys_role
+        <set>
+            <if test="name != null and name !=''">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="desp != null and desp !=''">
+                desp = #{desp,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="orders != null">
+                orders = #{orders,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE rule_id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="delById" parameterType="java.lang.Long">
+        DELETE FROM sys_role
+        WHERE rule_id = #{id}
+    </delete>
+
+    <!--根据条件删除-->
+    <delete id="delByRole" parameterType="com.yangy.common.entity.Role">
+        DELETE FROM sys_role
+        WHERE rule_id = #{recordId}
+    </delete>
+
+
+    <!--根据id集合删除-->
+    <delete id="delByIdList">
+        DELETE FROM sys_role
+        WHERE rule_id IN
+        <foreach collection="idArr" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </delete>
+
+</mapper>

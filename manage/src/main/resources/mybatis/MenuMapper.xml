@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangy.manage.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.yangy.common.entity.Menu">
+        <result column="menu_id" property="menuId" jdbcType="BIGINT"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="ctime" property="ctime" jdbcType="BIGINT"/>
+        <result column="orders" property="orders" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        menu_id,
+        parent_id,
+        name,
+        type,
+        value,
+        url,
+        icon,
+        status,
+        ctime,
+        orders
+    </sql>
+
+    <!--根据id查询-->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        WHERE menu_id = #{recordId}
+    </select>
+
+
+    <!--根据条件查询-->
+    <select id="findByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        <if test="menu !=null">
+            <where>
+                <if test="menu.menuId != null">AND menu_id = #{menu.menuId}</if>
+                <if test="menu.parentId != null">AND parent_id = #{menu.parentId}</if>
+                <if test="menu.name != null and menu.name !='' ">AND name like CONCAT('%',#{menu.name},'%')</if>
+                <if test="menu.type != null">AND type = #{menu.type}</if>
+                <if test="menu.value != null and menu.value !='' ">AND value like CONCAT('%',#{menu.value},'%')</if>
+                <if test="menu.url != null and menu.url !='' ">AND url like CONCAT('%',#{menu.url},'%')</if>
+                <if test="menu.icon != null and menu.icon !='' ">AND icon like CONCAT('%',#{menu.icon},'%')</if>
+                <if test="menu.status != null">AND status = #{menu.status}</if>
+                <if test="menu.ctime != null">AND ctime = #{menu.ctime}</if>
+                <if test="menu.orders != null">AND orders = #{menu.orders}</if>
+            </where>
+        </if>
+        LIMIT 0,1
+    </select>
+
+
+    <!--根据id集合查询-->
+    <select id="findByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        <if test="menu !=null">
+            <where>
+                <if test="menu.menuId != null">AND menu_id = #{menu.menuId}</if>
+                <if test="menu.parentId != null">AND parent_id = #{menu.parentId}</if>
+                <if test="menu.name != null and menu.name !='' ">AND name like CONCAT('%',#{menu.name},'%')</if>
+                <if test="menu.type != null">AND type = #{menu.type}</if>
+                <if test="menu.value != null and menu.value !='' ">AND value like CONCAT('%',#{menu.value},'%')</if>
+                <if test="menu.url != null and menu.url !='' ">AND url like CONCAT('%',#{menu.url},'%')</if>
+                <if test="menu.icon != null and menu.icon !='' ">AND icon like CONCAT('%',#{menu.icon},'%')</if>
+                <if test="menu.status != null">AND status = #{menu.status}</if>
+                <if test="menu.ctime != null">AND ctime = #{menu.ctime}</if>
+                <if test="menu.orders != null">AND orders = #{menu.orders}</if>
+            </where>
+        </if>
+        <if test="pageInfo != null">
+            order by menu_id desc
+            <if test="pageInfo.offset != null and pageInfo.pageSize != null">
+                LIMIT #{pageInfo.offset}, #{pageInfo.pageSize}
+            </if>
+        </if>
+    </select>
+
+
+    <!--根据参数分页查询-->
+    <select id="findByIdList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </select>
+
+
+    <!--根据条件计数-->
+    <select id="count" resultType="int">
+        SELECT
+        COUNT(id)
+        FROM sys_menu
+        <where>
+            <if test="menuId != null">AND menu_id = #{menuId}</if>
+            <if test="parentId != null">AND parent_id = #{parentId}</if>
+            <if test="name != null and name !='' ">
+                AND name like CONCAT('%',#{name},'%')
+            </if>
+            <if test="type != null">AND type = #{type}</if>
+            <if test="value != null and value !='' ">
+                AND value like CONCAT('%',#{value},'%')
+            </if>
+            <if test="url != null and url !='' ">
+                AND url like CONCAT('%',#{url},'%')
+            </if>
+            <if test="icon != null and icon !='' ">
+                AND icon like CONCAT('%',#{icon},'%')
+            </if>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="ctime != null">AND ctime = #{ctime}</if>
+            <if test="orders != null">AND orders = #{orders}</if>
+        </where>
+    </select>
+
+
+    <!--添加-->
+    <insert id="save" parameterType="com.yangy.common.entity.Menu" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="name != null and name !=''">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="value != null and value !=''">
+                value,
+            </if>
+            <if test="url != null and url !=''">
+                url,
+            </if>
+            <if test="icon != null and icon !=''">
+                icon,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="orders != null">
+                orders,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null and name !=''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="value != null and value !=''">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url !=''">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null and icon !=''">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="orders != null">
+                #{orders,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--修改-->
+    <update id="update" parameterType="com.yangy.common.entity.Menu">
+        UPDATE sys_menu
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null and name !=''">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="value != null and value !=''">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null and url !=''">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null and icon !=''">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=BIGINT},
+            </if>
+            <if test="orders != null">
+                orders = #{orders,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE menu_id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="delById" parameterType="java.lang.Long">
+        DELETE FROM sys_menu
+        WHERE menu_id = #{id}
+    </delete>
+
+    <!--根据条件删除-->
+    <delete id="delByMenu" parameterType="com.yangy.common.entity.Menu">
+        DELETE FROM sys_menu
+        WHERE menu_id = #{recordId}
+    </delete>
+
+
+    <!--根据id集合删除-->
+    <delete id="delByIdList">
+        DELETE FROM sys_menu
+        WHERE menu_id IN
+        <foreach collection="idArr" open="(" close=")" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+    </delete>
+
+</mapper>
