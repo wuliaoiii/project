@@ -1,0 +1,20 @@
+#模板引擎配置
+spring:
+  freemarker:
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    request-context-attribute: request
+    template-loader-path: classpath:/templates/
+    suffix:
+    prefix:
+    content-type: text/html
+    charset: UTF-8
+    settings:
+      auto_import: common/common.ftl as com
+      datetime_format: yyyy-MM-dd
+      template_update_delay: 0
+      classic_compatible: true
+      number_format: 0.######
+    cache: false
+    prefer-file-system-access: false

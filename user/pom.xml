@@ -32,20 +32,19 @@
             <groupId>com.yangy</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <!-- <dependency>
-             <groupId>io.github.rhwayfun</groupId>
-             <artifactId>spring-boot-rocketmq-starter</artifactId>
-             <version>0.0.3.RELEASE</version>
-         </dependency>-->
 
         <dependency>
             <groupId>com.alibaba.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
             <version>3.2.6</version>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>
@@ -91,6 +90,16 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <!--<resources>-->
+        <!--<resource>-->
+        <!--<directory>src/main/java</directory>-->
+        <!--<filtering>false</filtering>-->
+        <!--<includes>-->
+        <!--<include>**/mapper/xml/*.xml</include>-->
+        <!--</includes>-->
+        <!--</resource>-->
+        <!--</resources>-->
     </build>
 
 

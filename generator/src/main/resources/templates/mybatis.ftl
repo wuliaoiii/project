@@ -40,24 +40,45 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM ${tableNameSmall}
-        <if test="${tableName?uncap_first} !=null">
-            <where>
-                <#if column?exists>
-                    <#list column as model>
-                        <#if (model.columnType = 'VARCHAR' || model.columnType = 'text')>
-                <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null and ${tableName?uncap_first}.${model.changeColumnName?uncap_first} !='' ">
-                    AND ${model.columnName} like CONCAT('%',${r"#{"}${tableName?uncap_first}
-                    .${model.changeColumnName?uncap_first}},'%')
-                </if>
-                        <#else>
-                <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null">
-                    AND ${model.columnName} = ${r"#{"}${tableName?uncap_first}.${model.changeColumnName?uncap_first}}
-                </if>
-                        </#if>
-                    </#list>
-                </#if>
-            </where>
-        </if>
+        <where>
+            <#if column?exists>
+                <#list column as model>
+                    <#if (model.columnType = 'VARCHAR' || model.columnType = 'text')>
+            <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null and ${tableName?uncap_first}.${model.changeColumnName?uncap_first} !='' ">
+                AND ${model.columnName} like CONCAT('%',${r"#{"}${tableName?uncap_first}
+                .${model.changeColumnName?uncap_first}},'%')
+            </if>
+                    <#else>
+            <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null">
+                AND ${model.columnName} = ${r"#{"}${tableName?uncap_first}.${model.changeColumnName?uncap_first}}
+            </if>
+                    </#if>
+                </#list>
+            </#if>
+        </where>
+    </select>
+
+    <!--根据条件查询${tableAnnotation}-->
+    <select id="findFirst" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ${tableNameSmall}
+        <where>
+            <#if column?exists>
+                <#list column as model>
+                    <#if (model.columnType = 'VARCHAR' || model.columnType = 'text')>
+            <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null and ${tableName?uncap_first}.${model.changeColumnName?uncap_first} !='' ">
+                AND ${model.columnName} like CONCAT('%',${r"#{"}${tableName?uncap_first}
+                .${model.changeColumnName?uncap_first}},'%')
+            </if>
+                    <#else>
+            <if test="${tableName?uncap_first}.${model.changeColumnName?uncap_first} != null">
+                AND ${model.columnName} = ${r"#{"}${tableName?uncap_first}.${model.changeColumnName?uncap_first}}
+            </if>
+                    </#if>
+                </#list>
+            </#if>
+        </where>
         LIMIT 0,1
     </select>
 
@@ -112,19 +133,19 @@
         COUNT(id)
         FROM ${tableNameSmall}
         <where>
-                <#if column?exists>
-                    <#list column as model>
-                        <#if (model.columnType = 'VARCHAR' || model.columnType = 'text')>
-                <if test="${model.changeColumnName?uncap_first} != null and ${model.changeColumnName?uncap_first} !='' ">
-                    AND ${model.columnName} like CONCAT('%',${r"#{"}${model.changeColumnName?uncap_first}},'%')
-                </if>
-                        <#else>
-                <if test="${model.changeColumnName?uncap_first} != null">AND ${model.columnName}
-                    = ${r"#{"}${model.changeColumnName?uncap_first}}
-                </if>
-                        </#if>
-                    </#list>
-                </#if>
+            <#if column?exists>
+                <#list column as model>
+                    <#if (model.columnType = 'VARCHAR' || model.columnType = 'text')>
+            <if test="${model.changeColumnName?uncap_first} != null and ${model.changeColumnName?uncap_first} !='' ">
+                AND ${model.columnName} like CONCAT('%',${r"#{"}${model.changeColumnName?uncap_first}},'%')
+            </if>
+                    <#else>
+            <if test="${model.changeColumnName?uncap_first} != null">AND ${model.columnName}
+                = ${r"#{"}${model.changeColumnName?uncap_first}}
+            </if>
+                    </#if>
+                </#list>
+            </#if>
         </where>
     </select>
 
@@ -169,6 +190,33 @@
             </#list>
         </#if>
         </trim>
+    </insert>
+
+
+    <!--添加${tableAnnotation}-->
+    <insert id="saveList" parameterType="${basePackageName}.common.entity.${tableName}" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO ${tableNameSmall}
+        <#if column?exists>
+            <#list column as model>
+                <#if (model.columnName = '${pk}')>
+                <#elseif (model_has_next)>
+                    ${model.columnName},
+                <#else>
+                    ${model.columnName}
+                </#if>
+            </#list>
+        </#if>
+        <#if column?exists>
+            <#list column as model>
+                <#if (model.columnName = '${pk}')>
+                <#elseif (model_has_next)>
+                    ${r"#{"}${model.changeColumnName?uncap_first}},
+                <#else>
+                    ${r"#{"}${model.changeColumnName?uncap_first}}
+                </#if>
+            </#list>
+        </#if>
     </insert>
 
     <!--修改${tableAnnotation}-->

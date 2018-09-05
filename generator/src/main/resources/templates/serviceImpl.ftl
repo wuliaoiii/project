@@ -161,7 +161,7 @@ ${entityName}Mapper.update(record);
     @Transactional
     public ${tableName} findById(Long id){
     log.info("根据主键查询${entityName} -> id={}",id);
-    return null == id ? null : ${entityName}Mapper.findById(id) ;
+    return null == id ? null : ${entityName}Mapper.findById(id);
     }
 
     /**
@@ -239,5 +239,4 @@ ${entityName}Mapper.update(record);
         log.info("根据条件计数 -> ${entityName}={}", JSON.toJSONString(record));
         return ${entityName}Mapper.count(record);
         }
-
         }

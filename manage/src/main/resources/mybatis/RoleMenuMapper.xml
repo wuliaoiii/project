@@ -1,144 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yangy.manage.dao.RoleMenuMapper">
-    <resultMap id="BaseResultMap" type="com.yangy.common.entity.RoleMenu">
-        <result column="id" property="id" jdbcType="BIGINT"/>
-        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
-        <result column="menu_id" property="menuId" jdbcType="BIGINT"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangy.manage.mapper.RoleMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yangy.manage.entity.RoleMenu">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="menu_id" property="menuId"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,
-        role_id,
-        menu_id
+        id, role_id, menu_id
     </sql>
-
-    <!--根据id查询-->
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role_menu
-        WHERE id = #{recordId}
-    </select>
-
-
-    <!--根据条件查询-->
-    <select id="findByParam" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role_menu
-        <if test="roleMenu !=null">
-            <where>
-                <if test="roleMenu.id != null">AND id = #{roleMenu.id}</if>
-                <if test="roleMenu.roleId != null">AND role_id = #{roleMenu.roleId}</if>
-                <if test="roleMenu.menuId != null">AND menu_id = #{roleMenu.menuId}</if>
-            </where>
-        </if>
-        LIMIT 0,1
-    </select>
-
-
-    <!--根据id集合查询-->
-    <select id="findByPage" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role_menu
-        <if test="roleMenu !=null">
-            <where>
-                <if test="roleMenu.id != null">AND id = #{roleMenu.id}</if>
-                <if test="roleMenu.roleId != null">AND role_id = #{roleMenu.roleId}</if>
-                <if test="roleMenu.menuId != null">AND menu_id = #{roleMenu.menuId}</if>
-            </where>
-        </if>
-        <if test="pageInfo != null">
-            order by id desc
-            <if test="pageInfo.offset != null and pageInfo.pageSize != null">
-                LIMIT #{pageInfo.offset}, #{pageInfo.pageSize}
-            </if>
-        </if>
-    </select>
-
-
-    <!--根据参数分页查询-->
-    <select id="findByIdList" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_role_menu
-        WHERE id IN
-        <foreach collection="idList" open="(" close=")" item="recordId" separator=",">
-            #{recordId}
-        </foreach>
-    </select>
-
-
-    <!--根据条件计数-->
-    <select id="count" resultType="int">
-        SELECT
-        COUNT(id)
-        FROM sys_role_menu
-        <where>
-            <if test="id != null">AND id = #{id}</if>
-            <if test="roleId != null">AND role_id = #{roleId}</if>
-            <if test="menuId != null">AND menu_id = #{menuId}</if>
-        </where>
-    </select>
-
-
-    <!--添加-->
-    <insert id="save" parameterType="com.yangy.common.entity.RoleMenu" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sys_role_menu
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="roleId != null">
-                role_id,
-            </if>
-            <if test="menuId != null">
-                menu_id,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="roleId != null">
-                #{roleId,jdbcType=BIGINT},
-            </if>
-            <if test="menuId != null">
-                #{menuId,jdbcType=BIGINT},
-            </if>
-        </trim>
-    </insert>
-
-    <!--修改-->
-    <update id="update" parameterType="com.yangy.common.entity.RoleMenu">
-        UPDATE sys_role_menu
-        <set>
-            <if test="roleId != null">
-                role_id = #{roleId,jdbcType=BIGINT},
-            </if>
-            <if test="menuId != null">
-                menu_id = #{menuId,jdbcType=BIGINT},
-            </if>
-        </set>
-        WHERE id = #{id}
-    </update>
-
-    <!--根据id删除-->
-    <delete id="delById" parameterType="java.lang.Long">
-        DELETE FROM sys_role_menu
-        WHERE id = #{id}
-    </delete>
-
-    <!--根据条件删除-->
-    <delete id="delByRoleMenu" parameterType="com.yangy.common.entity.RoleMenu">
-        DELETE FROM sys_role_menu
-        WHERE id = #{recordId}
-    </delete>
-
-
-    <!--根据id集合删除-->
-    <delete id="delByIdList">
-        DELETE FROM sys_role_menu
-        WHERE id IN
-        <foreach collection="idArr" open="(" close=")" item="recordId" separator=",">
-            #{recordId}
-        </foreach>
-    </delete>
 
 </mapper>

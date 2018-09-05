@@ -1,144 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yangy.manage.dao.UserRoleMapper">
-    <resultMap id="BaseResultMap" type="com.yangy.common.entity.UserRole">
-        <result column="id" property="id" jdbcType="BIGINT"/>
-        <result column="user_id" property="userId" jdbcType="BIGINT"/>
-        <result column="role_id" property="roleId" jdbcType="BIGINT"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangy.manage.mapper.UserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yangy.manage.entity.UserRole">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,
-        user_id,
-        role_id
+        id, user_id, role_id
     </sql>
-
-    <!--根据id查询-->
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_user_role
-        WHERE id = #{recordId}
-    </select>
-
-
-    <!--根据条件查询-->
-    <select id="findByParam" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_user_role
-        <if test="userRole !=null">
-            <where>
-                <if test="userRole.id != null">AND id = #{userRole.id}</if>
-                <if test="userRole.userId != null">AND user_id = #{userRole.userId}</if>
-                <if test="userRole.roleId != null">AND role_id = #{userRole.roleId}</if>
-            </where>
-        </if>
-        LIMIT 0,1
-    </select>
-
-
-    <!--根据id集合查询-->
-    <select id="findByPage" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_user_role
-        <if test="userRole !=null">
-            <where>
-                <if test="userRole.id != null">AND id = #{userRole.id}</if>
-                <if test="userRole.userId != null">AND user_id = #{userRole.userId}</if>
-                <if test="userRole.roleId != null">AND role_id = #{userRole.roleId}</if>
-            </where>
-        </if>
-        <if test="pageInfo != null">
-            order by id desc
-            <if test="pageInfo.offset != null and pageInfo.pageSize != null">
-                LIMIT #{pageInfo.offset}, #{pageInfo.pageSize}
-            </if>
-        </if>
-    </select>
-
-
-    <!--根据参数分页查询-->
-    <select id="findByIdList" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM sys_user_role
-        WHERE id IN
-        <foreach collection="idList" open="(" close=")" item="recordId" separator=",">
-            #{recordId}
-        </foreach>
-    </select>
-
-
-    <!--根据条件计数-->
-    <select id="count" resultType="int">
-        SELECT
-        COUNT(id)
-        FROM sys_user_role
-        <where>
-            <if test="id != null">AND id = #{id}</if>
-            <if test="userId != null">AND user_id = #{userId}</if>
-            <if test="roleId != null">AND role_id = #{roleId}</if>
-        </where>
-    </select>
-
-
-    <!--添加-->
-    <insert id="save" parameterType="com.yangy.common.entity.UserRole" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sys_user_role
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="roleId != null">
-                role_id,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                #{userId,jdbcType=BIGINT},
-            </if>
-            <if test="roleId != null">
-                #{roleId,jdbcType=BIGINT},
-            </if>
-        </trim>
-    </insert>
-
-    <!--修改-->
-    <update id="update" parameterType="com.yangy.common.entity.UserRole">
-        UPDATE sys_user_role
-        <set>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=BIGINT},
-            </if>
-            <if test="roleId != null">
-                role_id = #{roleId,jdbcType=BIGINT},
-            </if>
-        </set>
-        WHERE id = #{id}
-    </update>
-
-    <!--根据id删除-->
-    <delete id="delById" parameterType="java.lang.Long">
-        DELETE FROM sys_user_role
-        WHERE id = #{id}
-    </delete>
-
-    <!--根据条件删除-->
-    <delete id="delByUserRole" parameterType="com.yangy.common.entity.UserRole">
-        DELETE FROM sys_user_role
-        WHERE id = #{recordId}
-    </delete>
-
-
-    <!--根据id集合删除-->
-    <delete id="delByIdList">
-        DELETE FROM sys_user_role
-        WHERE id IN
-        <foreach collection="idArr" open="(" close=")" item="recordId" separator=",">
-            #{recordId}
-        </foreach>
-    </delete>
 
 </mapper>

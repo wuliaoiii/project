@@ -173,14 +173,14 @@ public class CodeGenerateUtils {
     }
 
     /**
-     * 生成 mybatis xml
+     * 生成 mybatis mybatis
      *
      * @param resultSet
      * @param tableClass
      */
     private static void generateMybatisFile(ResultSet resultSet, TableClass tableClass) {
         String dicPath = GenerateConfig.getRESOURCEPATH() + "mybatis/";
-        final String suffix = "Mapper.xml";
+        final String suffix = "Mapper.mybatis";
         final String path = dicPath + tableClass.getChangeTableName() + suffix;
         final String templateName = "mybatis.ftl";
         makeFile(dicPath, suffix);

@@ -12,7 +12,7 @@ public interface BaseService<Model> {
      * @param model
      * @return
      */
-    int save(Model model);
+    Integer save(Model model);
 
     /**
      * 批量添加记录
@@ -20,7 +20,7 @@ public interface BaseService<Model> {
      * @param model
      * @return
      */
-    int saveList(List<Model> model);
+    Integer saveList(List<Model> model);
 
     /**
      * 根据主键删除记录
@@ -28,7 +28,7 @@ public interface BaseService<Model> {
      * @param id
      * @return
      */
-    int del(Long id);
+    Integer del(Long id);
 
     /**
      * 根据条件删除记录
@@ -36,7 +36,7 @@ public interface BaseService<Model> {
      * @param model
      * @return
      */
-    int del(Model model);
+    Integer del(Model model);
 
     /**
      * 根据主键集合删除记录
@@ -44,7 +44,7 @@ public interface BaseService<Model> {
      * @param idList
      * @return
      */
-    int delByIdList(List<Long> idList);
+    Integer delByIdList(List<Long> idList);
 
     /**
      * 修改记录
@@ -52,7 +52,7 @@ public interface BaseService<Model> {
      * @param model
      * @return
      */
-    int update(Model model);
+    Integer update(Model model);
 
     /**
      * 根据主键查询记录
@@ -100,6 +100,6 @@ public interface BaseService<Model> {
      * @param model
      * @return
      */
-    int count(Model model);
+    Integer count(Model model);
 
 }

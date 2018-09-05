@@ -1,6 +1,5 @@
 package com.yangy.common.utils;
 
-import com.yangy.common.entity.User;
 import com.yangy.common.enums.ResultCode;
 import com.yangy.common.exception.MyException;
 import org.apache.http.Consts;
@@ -20,7 +19,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,16 +35,16 @@ public class HttpUtil {
 
         String post = null;
         try {
-            User user = new User();
-            user.setUserId(180L);
-            String domain = "https://luyanan.com";
-            String url = "/gateway/user/dict/find/key";
-
-            Map<String, Object> stringMapHashMap = new HashMap<>();
-            stringMapHashMap.put("msg", "product_type");
-            String toString = getMapToString(stringMapHashMap, true);
-            post = get(domain, url, toString, 1000, 1000);
-            System.out.println(post);
+//            User user = new User();
+//            user.setUserId(180L);
+//            String domain = "https://luyanan.com";
+//            String url = "/gateway/user/dict/find/key";
+//
+//            Map<String, Object> stringMapHashMap = new HashMap<>();
+//            stringMapHashMap.put("msg", "product_type");
+//            String toString = getMapToString(stringMapHashMap, true);
+//            post = get(domain, url, toString, 1000, 1000);
+//            System.out.println(post);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,7 +64,7 @@ public class HttpUtil {
             case "application/json":
                 httpPost.addHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
                 break;
-            case "application/xml":
+            case "application/mybatis":
                 httpPost.addHeader("Content-Type", ContentType.APPLICATION_XML.getMimeType());
                 break;
         }

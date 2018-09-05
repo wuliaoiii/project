@@ -1,102 +1,64 @@
 package com.yangy.common.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
- * 描述：模型
- *
- * @author yangy
- * @date 2018/08/10
+ * @author yang yang
+ * @create 2018/8/21
+ * @since 1.0.0
  */
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_user")
-public class User implements Serializable {
+public class User {
 
-    /**
-     * 用户主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Long userId;
-
-    /**
-     * 用户名
-     */
-    @TableField("username")
+    private long userId;
     private String username;
-
-    /**
-     * 性别(0 女 1男)
-     */
-    @TableField("gender")
-    private Integer gender;
-
-    /**
-     * 头像
-     */
-    @TableField("avatar")
-    private String avatar;
-
-    /**
-     * 用户密码
-     */
-    @TableField("pwd")
-    private String pwd;
-
-    /**
-     * 盐
-     */
-    @TableField("salt")
-    private String salt;
-
-    /**
-     * 微信open_id
-     */
-    @TableField("wechat")
-    private String wechat;
-
-    /**
-     * 新浪第三方id
-     */
-    @TableField("sina")
-    private String sina;
-
-    /**
-     * qq第三方id
-     */
-    @TableField("qq")
-    private String qq;
-
-    /**
-     * 用户手机号
-     */
-    @TableField("phone")
+    private int gender;
+    private String address;
     private String phone;
 
-    /**
-     * 用户邮箱
-     */
-    @TableField("email")
-    private String email;
+    public String getPhone() {
+        return phone;
+    }
 
-    /**
-     * 创建时间
-     */
-    @TableField("ctime")
-    private Long ctime;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    /**
-     * 启用状态(0 启用 1 锁定)
-     */
-    @TableField("locked")
-    private Integer locked;
+    public long getUserId() {
+        return userId;
+    }
 
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

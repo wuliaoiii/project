@@ -1,11 +1,8 @@
 package ${packageName}.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -15,7 +12,6 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@TableName("${tableNameSmall}")
 public class ${tableName} implements Serializable {
 
 <#if column?exists>
@@ -24,7 +20,6 @@ public class ${tableName} implements Serializable {
     /**
      *${model.columnComment!}
      */
-    @TableField("${model.columnName}")
     private String ${model.changeColumnName?uncap_first};
 
         </#if>
@@ -32,15 +27,12 @@ public class ${tableName} implements Serializable {
     /**
      *${model.columnComment!}
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long ${model.changeColumnName?uncap_first};
 
         <#elseif (model.columnType = 'BIGINT' && model.columnName != '${pk}')>
     /**
      *${model.columnComment!}
      */
-    @TableField("${model.columnName}")
     private Long ${model.changeColumnName?uncap_first};
 
         </#if>
@@ -48,7 +40,6 @@ public class ${tableName} implements Serializable {
     /**
      *${model.columnComment!}
      */
-    @TableField("${model.columnName}")
     private Integer ${model.changeColumnName?uncap_first};
 
         </#if>
@@ -56,7 +47,6 @@ public class ${tableName} implements Serializable {
     /**
      *${model.columnComment!}
      */
-    @TableField("${model.columnName}")
     private BigDecimal ${model.changeColumnName?uncap_first};
 
         </#if>
@@ -64,7 +54,6 @@ public class ${tableName} implements Serializable {
     /**
      *${model.columnComment!}
      */
-    @TableField("${model.columnName}")
     private Date ${model.changeColumnName?uncap_first};
 
         </#if>

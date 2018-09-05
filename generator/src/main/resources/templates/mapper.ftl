@@ -21,7 +21,7 @@ public interface ${tableName}Mapper {
      * @param record
      * @return
      */
-    int save(@Param("${entityName}")${tableName} record);
+    int save(${tableName} record);
 
     /**
      * 批量添加记录
@@ -62,7 +62,7 @@ public interface ${tableName}Mapper {
     * @param record
     * @return
     */
-    int update(@Param("${entityName}")${tableName} record);
+    int update(${tableName} record);
 
     /**
     * 根据主键查询记录
@@ -95,7 +95,7 @@ ${tableName} findFirst(@Param("${entityName}")${tableName} record);
         * @param record
         * @return
         */
-        List<${tableName}> findByParam(@Param("${entityName}")${tableName} record);
+        List<${tableName}> findByParam(${tableName} record);
 
         /**
         * 分页查询
@@ -103,8 +103,8 @@ ${tableName} findFirst(@Param("${entityName}")${tableName} record);
         * @param pageInfo
         * @return
         */
-        List<${tableName}> findByPage(@Param("${entityName}")${tableName} ${entityName},@Param("pageInfo")PageInfo
-        pageInfo);
+        List<${tableName}> findByPage(@Param("${entityName}")${tableName} ${entityName}
+        ,@Param("pageInfo")PageInfopageInfo);
 
         /**
         * 条件统计
@@ -112,6 +112,5 @@ ${tableName} findFirst(@Param("${entityName}")${tableName} record);
         * @param record
         * @return
         */
-        int count(@Param("${entityName}")${tableName} record);
-
+        int count(${tableName} record);
         }
