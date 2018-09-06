@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.TreeSet;
 
 /**
  * 系统用户展示model
@@ -79,6 +78,6 @@ public class UserVo {
     /**
      * 菜单列表
      */
-    private TreeSet<Menu> menuTree;
+    private List<Menu> menuList;
 
 }

@@ -62,74 +62,21 @@
                 pwd: $("#password").val(),
                 verifyCode: $("#imageCode").val()
             }, function (result) {
-                if (result.success) {
-                    if (result.roleSize == 1) {
-                        var roleId = result.roleList[0].id;
-                        $.post("${basePath!}/user/saveRole", {roleId: roleId}, function (result) {
-                            if (result.success) {
-                                window.location.href = "${basePath!}/welcome";
-                            }
-                        });
-                    } else {
-                        $("#roleList").empty();
-                        var roles = result.roleList;
-                        for (var i = 0; i < roles.length; i++) {
-                            if (i == 0) {
-                                $("#roleList").append("<input type='radio' checked=true  name='role' title='" + roles[i].name + "' value='" + roles[i].id + "'/>")
 
-                            } else {
-                                $("#roleList").append("<input type='radio' name='role'  title='" + roles[i].name + "' value='" + roles[i].id + "'/>")
-                            }
-                            layui.form.render();//刷新所有表单的渲染效果
-                        }
-
-                        layer.open(
-                                {
-                                    type: 1,
-                                    title: '请选择一个角色登录系统',
-                                    content: $("#light"),
-                                    area: '500px',
-                                    offset: 'auto',
-                                    skin: 'layui-layer-molv',
-                                    shade: [0.8, '#393D49']
-                                }
-                        )
-
-                        /*document.getElementById('light').style.display='block';
-                        document.getElementById('fade').style.display='block';*/
-                    }
+                if (result.code = 200) {
+                    window.location.href = "${basePath!}/welcome";
                 } else {
-                    layer.alert(result.errorInfo);
+                    layer.alert(result.msg);
                 }
-            });
-
-
-            return false;
-        });
-
-
-        //监听角色选择提交
-        form.on('submit(choserolefilter)', function (data) {
-            saveRole();
+            }, "json");
             return false;
         });
 
     });
-
-
-    function saveRole() {
-        var roleId = $("input[name='role']:checked").val();
-        $.post("${basePath!}/user/saveRole", {roleId: roleId}, function (result) {
-            if (result.success) {
-                window.location.href = "${basePath!}/welcome";
-            }
-        });
-    }
 </script>
 
 </body>
 </html>
-
 
 <script type="text/javascript">
     /*session过期后登陆页面跳出iframe页面问题

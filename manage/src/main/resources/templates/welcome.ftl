@@ -26,23 +26,22 @@
             <!-- 顶级菜单 -->
             <ul class="layui-nav mobileTopLevelMenus" mobile>
                 <li class="layui-nav-item" data-menu="contentManagement">
-                    <a href="javascript:;"><i class="seraph icon-caidan"></i><cite>layuiCMS</cite></a>
+                    <a href="javascript:;"><i class="seraph icon-caidan"></i><cite>分类</cite></a>
                     <dl class="layui-nav-child">
                     <#--使用freemarker从session中获得一级菜单列表-->
-							<#list tmenuOneClassList as key>
+							<#list menuInfo as key>
 								<dd data-menu="${key.name!}"><a href="javascript:;"><i class="layui-icon"
                                                                                        data-icon="${key.icon!}">${key.icon!}</i><cite>${key.name!}</cite></a>
                                 </dd>
                             </#list>
-                    <#--<dd class="layui-this" data-menu="contentManagement"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a></dd>
-                    <dd data-menu="systemeSttings"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a></dd>-->
                     </dl>
                 </li>
             </ul>
             <ul class="layui-nav topLevelMenus" pc>
-
-            <#--使用freemarker从session中获得一级菜单列表-->
-					<#list tmenuOneClassList as key>
+                a href="javascript:;"><i class="seraph icon-caidan"></i><cite>分类</cite></a>
+                <dl class="layui-nav-child">
+                <#--使用freemarker从session中获得一级菜单列表-->
+					<#list menuInfo as key>
                         <#if key_index == 0>
                             <li class="layui-nav-item layui-this" data-menu="${key.name!}">
                                 <a href="javascript:;"><i class="layui-icon"
@@ -56,13 +55,7 @@
                             </li>
                         </#if>
                     </#list>
-
-            <#--<li class="layui-nav-item layui-this" data-menu="contentManagement">
-                <a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a>
-            </li>
-            <li class="layui-nav-item" data-menu="systemeSttings" pc>
-                <a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a>
-            </li>-->
+                </dl>
             </ul>
             <!-- 顶部右侧菜单 -->
             <ul class="layui-nav top_menu">
@@ -93,11 +86,10 @@
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
             <a class="img" title="我的头像"><img src="${basePath!}/static/pic.jpg" class="userAvatar"></a>
-            <p>你好！<span class="userName">${currentUser.trueName!}</span>, 欢迎登录</p>
+            <p>你好！<span class="userName">${currentUser.username!}</span>, 欢迎登录</p>
         </div>
 
         <!-- 搜索 -->
-    <#--
     <div class="layui-form component">
         <select name="search" id="search" lay-search lay-filter="searchPage">
             <option value="">搜索页面或功能</option>
@@ -106,7 +98,6 @@
         </select>
         <i class="layui-icon">&#xe615;</i>
     </div>
-    -->
 
         <div class="navBar layui-side-scroll" id="navBar">
             <ul class="layui-nav layui-nav-tree">
@@ -144,7 +135,7 @@
     </div>
     <!-- 底部 -->
     <div class="layui-footer footer">
-        <p><span>copyright @2018 YangY</span></p>
+        <p><span>copyright @2018 yangy</span></p>
     </div>
 </div>
 
@@ -180,7 +171,7 @@
         //通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
         function getData(json) {
             $.getJSON(tab.tabConfig.url, function (data) {
-               	<#list tmenuOneClassList as key>
+               	<#list menuInfo as key>
 					if (json == "${key.name!}") {
                         dataStr = data.${key.name!};
                         //重新渲染左侧菜单
@@ -233,7 +224,7 @@
         })
 
         //通过顶部菜单获取左侧二三级菜单   注：此处只做演示之用，实际开发中通过接口传参的方式获取导航数据
-        <#list tmenuOneClassList as key>
+        <#list menuInfo as key>
             <#if key_index == 0>
                 getData("${key.name!}");
             </#if>
