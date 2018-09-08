@@ -1,0 +1,19 @@
+#端口号配置
+server:
+  port: 9230
+spring:
+  application:
+    name: eureka
+eureka:
+  instance:
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 30 #client过期时间 一般为 刷新时间配置3倍 默认 90s
+    lease-renewal-interval-in-seconds: 10 #server刷新时间 间隔该时间发起主动心跳 默认 30s
+  client:
+    register-with-eureka: false  #取消 eureka 自我注册
+    fetch-registry: false  #注册中心的服务器 取消检索服务
+    service-url:
+      default-zone: http://${eureka.instance.hostname}:${server.port}/eureka/ #注册中心地址
+  server:
+    enable-self-preservation: false #关闭注册中心的自我保护
+    eviction-interval-timer-in-ms: 30000 #清理间隔时间 (单位毫秒 默认是 60*1000)

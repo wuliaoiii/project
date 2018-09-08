@@ -20,7 +20,7 @@
     <!-- 顶部 -->
     <div class="layui-header header">
         <div class="layui-main mag0">
-            <a href="${basePath!}/welcome" class="logo">超市管理系统</a>
+            <a href="${basePath!}/welcome" class="logo">后台管理系统</a>
             <!-- 显示/隐藏菜单 -->
             <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
             <!-- 顶级菜单 -->

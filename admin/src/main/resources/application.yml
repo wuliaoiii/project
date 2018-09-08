@@ -1,0 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  application:
+    name: admin
+  boot:
+    admin:
+      client:
+        url:
+server:
+  port: 9333

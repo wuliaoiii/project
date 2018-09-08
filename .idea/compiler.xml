@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="admin" />
         <module name="common" />
+        <module name="config" />
         <module name="design" />
         <module name="eureka" />
         <module name="generator" />
@@ -16,9 +17,11 @@
         <module name="mq" />
         <module name="pay" />
         <module name="project" />
-        <module name="security" />
         <module name="user" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="security" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

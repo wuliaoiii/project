@@ -12,15 +12,19 @@ import com.yangy.manage.service.MenuService;
 import com.yangy.manage.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,10 +38,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 public class UserController {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
-    @Resource
+    @Autowired
     private MenuService menuService;
 
     @PostMapping("/login")
@@ -62,6 +66,10 @@ public class UserController {
             List<Long> menuIdList = roleMenuList.stream().map(roleMenuFilter -> roleMenu.getMenuId()).collect(Collectors.toList());
             List<Menu> menuList = menuService.selectList(new EntityWrapper<Menu>().in("menu_id", menuIdList));
 
+
+            Map<Long, List<Menu>> collect = menuList.stream().sorted().collect(Collectors.groupingBy(Menu::getParentId));
+
+
             UserVo userResult = new UserVo();
             BeanUtils.copyProperties(userResult, first);
 
@@ -78,12 +86,6 @@ public class UserController {
         return new Result<User>().ok(null);
     }
 
-    /**
-     * 创建
-     *
-     * @param user
-     * @result
-     */
     @PostMapping("/save/user")
     public Result save(@RequestBody User user) {
         boolean insert = userService.insert(user);
@@ -132,33 +134,62 @@ public class UserController {
     }
 
     @GetMapping("/loadMenuInfo")
-    public String loadMenuInfo(HttpSession session) {
+    public String loadMenuInfo(Long menuId, HttpSession session) {
         User userInfo = (User) session.getAttribute("userInfo");
 
-        UserRole userRole = UserRole.builder().userId(userInfo.getUserId()).build();
-        EntityWrapper<UserRole> userRoleEntityWrapper = new EntityWrapper<>();
-        List<UserRole> userRoleList = userRole.selectList(userRoleEntityWrapper);
-        List<Long> roleIdList = userRoleList.stream().map(userRoleFilter -> userRole.getRoleId()).collect(Collectors.toList());
+        //根据用户id和菜单主键查询 菜单集合
+        List<UserRole> userRoleList = UserRole.builder().build().selectList(new EntityWrapper<UserRole>()
+                .eq("user_id", userInfo.getUserId()));
+        List<Long> roleIdList = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
 
-        RoleMenu roleMenu = new RoleMenu();
-        List<RoleMenu> roleMenuList = roleMenu.selectList(new EntityWrapper<RoleMenu>().in("role_id", roleIdList));
-        List<Long> menuIdList = roleMenuList.stream().map(roleMenuFilter -> roleMenu.getMenuId()).collect(Collectors.toList());
-        List<Menu> menuList = menuService.selectList(new EntityWrapper<Menu>().in("menu_id", menuIdList));
+        List<RoleMenu> roleMenuList = RoleMenu.builder().build().selectList(new EntityWrapper<RoleMenu>().in("role_id", roleIdList));
 
+        List<Long> menuIdList = roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
 
-        /*
-         * 菜单集合
-         * */
+        List<Menu> menuList = menuService.selectList(new EntityWrapper<Menu>()
+                .in("menu_id", menuIdList)
+                .eq("parent_id", menuId));
 
+        List<Menu> collect = menuList.stream().filter(menu -> null == menu.getParentId()).collect(Collectors.toList());
 
-        TreeSet<Menu> menus = new TreeSet<>();
+        for (Menu menu : collect) {
+            menu.setChildren(getChild(menu.getMenuId(), menuList));
+        }
 
-
-        session.setAttribute("menuInfo", menuList);
-
-//        String json = getAllMenuByParentId(parentId, currentRole.getId()).toString();
-        //System.out.println(json);
+        session.setAttribute("menuInfo", collect);
         return null;
     }
+
+    private List<Menu> getChild(Long parentId, List<Menu> rootMenu) {
+        // 子菜单
+        List<Menu> childList = new ArrayList<>();
+        for (Menu menu : rootMenu) {
+            // 遍历所有节点，将父菜单id与传过来的id比较
+            if (null != menu.getParentId()) {
+                if (menu.getParentId().equals(parentId)) {
+                    childList.add(menu);
+                }
+            }
+        }
+        // 把子菜单的子菜单再循环一遍
+        for (Menu menu : childList) {// 没有url子菜单还有子菜单
+            if (StringUtils.isBlank(menu.getUrl())) {
+                // 递归
+                menu.setChildren(getChild(menu.getMenuId(), rootMenu));
+            }
+        } // 递归退出条件
+        if (childList.size() == 0) {
+            return null;
+        }
+        return childList;
+    }
+
+    @GetMapping("/auth")
+    public String getCode(HttpServletRequest request, String code) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        return null;
+    }
+
 
 }

@@ -15,7 +15,7 @@
         <option value="$PROJECT_DIR$/design/pom.xml" />
         <option value="$PROJECT_DIR$/admin/pom.xml" />
         <option value="$PROJECT_DIR$/mq/pom.xml" />
-        <option value="$PROJECT_DIR$/security/pom.xml" />
+        <option value="$PROJECT_DIR$/config/pom.xml" />
       </list>
     </option>
   </component>

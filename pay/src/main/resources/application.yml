@@ -1,0 +1,14 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.github.binarywang.demo.wx.pay: DEBUG
+    com.github.binarywang.wxpay: DEBUG
+
+wechat:
+  pay:
+    appId: wx5ca7581639b516cc
+    mchId: 1509469741
+    mchKey: b8d42a30afebf461fb91135f2c700646
+    subAppId:
+    subMchId:
+    keyPath:
