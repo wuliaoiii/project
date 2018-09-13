@@ -20,8 +20,6 @@
         <module name="user" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="security" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>

@@ -166,11 +166,12 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>com.github.binarywang</groupId>-->
-        <!--<artifactId>weixin-java-pay</artifactId>-->
-        <!--<version>3.1.4.BETA</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

@@ -143,9 +143,7 @@ public class UserController {
         List<Long> roleIdList = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
 
         List<RoleMenu> roleMenuList = RoleMenu.builder().build().selectList(new EntityWrapper<RoleMenu>().in("role_id", roleIdList));
-
         List<Long> menuIdList = roleMenuList.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
-
         List<Menu> menuList = menuService.selectList(new EntityWrapper<Menu>()
                 .in("menu_id", menuIdList)
                 .eq("parent_id", menuId));

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class AppTest {
     /**
-     * Rigorous Test :-)
+     * Rigorous SendTest :-)
      */
     @Test
     public void shouldAnswerWithTrue() {
