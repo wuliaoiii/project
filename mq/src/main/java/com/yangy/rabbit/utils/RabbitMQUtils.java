@@ -171,7 +171,7 @@ public class RabbitMQUtils {
      * @param queueName 队列名称
      */
     public static void consume(String queueName) {
-        Channel channel = getChannel();
+        final Channel channel = getChannel();
 
         try {
             channel.queueDeclare(queueName, true, false, false, null);
