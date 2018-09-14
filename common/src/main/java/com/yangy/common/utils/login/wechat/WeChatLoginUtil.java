@@ -16,15 +16,15 @@ import java.net.URLEncoder;
 public class WeChatLoginUtil {
 
     public static void getCode() throws Exception {
-        String encode = URLEncoder.encode("http://140.143.61.41/user/login/notify", Consts.UTF_8.name());
+        String encode = URLEncoder.encode("http://tfaudc.natappfree.cc/test/wxLoginCallback", Consts.UTF_8.name());
 
         String getCodeUrl = WeChatConfig.getGetCodeUrl();
 
         String url = "https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
         url = url.replace("APPID", "wxcc5884c547bc6752")
                 .replace("REDIRECT_URI", encode)
-                .replace("SCOPE", "snsapi_userinfo")
-                .replace("STATE", "wechat_sdk_demo")
+                .replace("SCOPE", "snsapi_login")
+                .replace("STATE", "GzB5zUwo543UutSepSUX")
         ;
 
         System.out.println(url);

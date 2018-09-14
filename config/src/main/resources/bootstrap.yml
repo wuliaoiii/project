@@ -10,26 +10,36 @@ spring:
           uri: https://github.com/wuliaoiii/project-config.git
           username: 1756951369@qq.com
           password: wuliao..0329
+          basedir: D:\config
           search-paths: dev
-  security:
-    user:
-      name: yangy
-      password: yangy
+    bus:
+      trace:
+        enabled: true
+#  security:
+#    user:
+#      name: yangy
+#      password: yangy
 
 #端口号配置
 server:
   port: 9231
-registration:
-  master:
-    hostname: localhost
-    port: 9230
 eureka:
   client:
     service-url:
-      defaultZone: http://${registration.master.hostname}:${registration.master.port}/eureka/
+      defaultZone: http://localhost:9230/eureka/
 encrypt:
   key-store:
     alias: config-server
     location: config-server.keystore
     secret: wuliao..0329
     password: wuliao..0329
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
