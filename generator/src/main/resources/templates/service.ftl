@@ -52,63 +52,61 @@ public interface ${tableName}Service{
      * @param idList
      * @return
      */
-    int delByIdList(List
-<Long> idList);
+    int delByIdList(List<Long> idList);
 
     /**
-    * 修改记录
-    *
-    * @param record
-    * @return
-    */
+     * 修改记录
+     *
+     * @param record
+     * @return
+     */
     long update(${tableName} record);
 
     /**
-    * 根据主键查询记录
-    *
-    * @param id
-    * @return
-    */
-${tableName} findById(Long id);
+     * 根据主键查询记录
+     *
+     * @param id
+     * @return
+     */
+    ${tableName} findById(Long id);
 
     /**
-    * 查询满足条件的第一条记录
-    *
-    * @param record
-    * @return
-    */
-${tableName} findFirst(${tableName} record);
+     * 查询满足条件的第一条记录
+     *
+     * @param record
+     * @return
+     */
+    ${tableName} findFirst(${tableName} record);
 
     /**
-    * 根据id集合查询记录集合
-    *
-    * @param idList
-    * @return
-    */
-    List<${tableName}> findByIdList(List
-    <Long> idList);
+     * 根据id集合查询记录集合
+     *
+     * @param idList
+     * @return
+     */
+    List<${tableName}> findByIdList(List<Long> idList);
 
-        /**
-        * 条件查询记录集合
-        *
-        * @param record
-        * @return
-        */
-        List<${tableName}> findByParam(${tableName} record);
+    /**
+     * 条件查询记录集合
+     *
+     * @param record
+     * @return
+     */
+    List<${tableName}> findByParam(${tableName} record);
 
-        /**
-        * 分页查询
-        *
-        * @param pageInfo
-        * @return
-        */
-        PageInfo findByPage(PageInfo<${tableName}> pageInfo);
+    /**
+     * 分页查询
+     *
+     * @param pageInfo
+     * @return
+     */
+    PageInfo findByPage(PageInfo<${tableName}> pageInfo);
 
-        /**
-        * 条件统计
-        *
-        * @param record
-        * @return
-        */
-        int count(${tableName} record);
-        }
+    /**
+     * 条件统计
+     *
+     * @param record
+     * @return
+     */
+    int count(${tableName} record);
+}

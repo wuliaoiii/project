@@ -14,6 +14,6 @@ spring:
     suffix: .ftl
 cola:
   devtools: #开发工具
-    project-location: D:/test/repository/cola-cloud/cola-cloud-services/cola-cloud-autonumber
+    project-location: D:/test/
     developer: yangy
     table-prefix: t_

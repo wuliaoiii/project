@@ -38,7 +38,7 @@ public class ${tableName}ServiceImpl implements ${tableName}Service {
     public long save(${tableName} record){
         log.info("添加${entityName} -> ${entityName}={}",JSON.toJSONString(record));
         try {
-${entityName}Mapper.save(record);
+            ${entityName}Mapper.save(record);
         } catch (MyException e) {
             throw new MyException(ResultCode.SAVE_FAIL);
         }
@@ -78,7 +78,7 @@ ${entityName}Mapper.save(record);
             throw new MyException(ResultCode.PARAM_ERROR);
         }
         try {
-${entityName}Mapper.update(record);
+            ${entityName}Mapper.update(record);
         } catch (MyException e) {
             throw new MyException(ResultCode.UPDATE_FAIL);
         }
@@ -136,19 +136,18 @@ ${entityName}Mapper.update(record);
      */
     @Override
     @Transactional
-    public int delByIdList(List
-<Long> idList){
-    log.info("批量删除${entityName} -> idList={}",JSON.toJSONString(idList));
-    if(CollectionUtils.isEmpty(idList)){
-    throw new MyException(ResultCode.PARAM_ERROR);
-    }
-    int delResult = 0;
-    try {
-    delResult = ${entityName}Mapper.delByIdList(idList);
-    } catch (Exception e) {
-    throw new MyException(ResultCode.DEL_FAIL);
-    }
-    return delResult;
+    public int delByIdList(List<Long> idList){
+        log.info("批量删除${entityName} -> idList={}",JSON.toJSONString(idList));
+        if(CollectionUtils.isEmpty(idList)){
+            throw new MyException(ResultCode.PARAM_ERROR);
+        }
+        int delResult = 0;
+        try {
+            delResult = ${entityName}Mapper.delByIdList(idList);
+        } catch (Exception e) {
+            throw new MyException(ResultCode.DEL_FAIL);
+        }
+        return delResult;
     }
 
     /**
@@ -160,8 +159,8 @@ ${entityName}Mapper.update(record);
     @Override
     @Transactional
     public ${tableName} findById(Long id){
-    log.info("根据主键查询${entityName} -> id={}",id);
-    return null == id ? null : ${entityName}Mapper.findById(id);
+        log.info("根据主键查询${entityName} -> id={}",id);
+        return null == id ? null : ${entityName}Mapper.findById(id);
     }
 
     /**
@@ -173,8 +172,8 @@ ${entityName}Mapper.update(record);
     @Override
     @Transactional
     public ${tableName} findFirst(${tableName} record){
-    log.info("根据条件查询${entityName}的第一条记录 -> ${entityName}={}",JSON.toJSONString(record));
-    return ${entityName}Mapper.findFirst(record);
+        log.info("根据条件查询${entityName}的第一条记录 -> ${entityName}={}",JSON.toJSONString(record));
+        return ${entityName}Mapper.findFirst(record);
     }
 
     /**
@@ -184,59 +183,54 @@ ${entityName}Mapper.update(record);
     * @return
     */
     @Override
-    public List<${tableName}> findByIdList(List
-    <Long> idList){
+    public List<${tableName}> findByIdList(List<Long> idList){
         log.info("根据主键集合查询${entityName} -> idList={}",JSON.toJSONString(idList));
         return ${entityName}Mapper.findByIdList(idList);
-        }
+    }
 
-        /**
-        * 根据条件查询信息
-        *
-        * @param record
-        * @return
-        */
-        @Override
-        public List<${tableName}> findByParam(${tableName} record) {
-        log.info("根据条件查询${entityName} -> ${entityName}={}",JSON.toJSONString(record));
+    /**
+    * 根据条件查询信息
+    *
+    * @param record
+    * @return
+    */
+    @Override
+    public List<${tableName}> findByParam(${tableName} record) {
+    log.info("根据条件查询${entityName} -> ${entityName}={}",JSON.toJSONString(record));
         return ${entityName}Mapper.findByParam(record);
-        }
+    }
 
-        /**
-        * 根据条件分页查询信息
-        *
-        * @param pageInfo
-        * @return
-        */
-        @Override
-        public PageInfo findByPage(PageInfo<${tableName}> pageInfo) {
+    /**
+    * 根据条件分页查询信息
+    *
+    * @param pageInfo
+    * @return
+    */
+    @Override
+    public PageInfo findByPage(PageInfo<${tableName}> pageInfo) {
         log.info("分页查询${entityName} -> pageInfo={}",JSON.toJSONString(pageInfo));
-    ${tableName} ${entityName} = pageInfo.getData();
+        ${tableName} ${entityName} = pageInfo.getData();
         List<${tableName}> ${entityName}List = ${entityName}Mapper.findByPage(${entityName}, pageInfo);
         int count = count(${entityName});
 
-        PageInfo
-        <List
-        <${tableName}>> pageReturn = new PageInfo
-        <List
-        <${tableName}>>();
+        PageInfo<List<${tableName}>> pageReturn = new PageInfo<List<${tableName}>>();
         pageReturn.setCount(count);
         pageReturn.setPageIndex(pageInfo.getPageIndex());
         pageReturn.setPageSize(pageInfo.getPageSize());
         pageReturn.setData(${entityName}List);
 
         return pageReturn;
-        }
+    }
 
-        /**
-        * 根据条件统计信息
-        *
-        * @param record
-        * @return
-        */
-        @Override
-        public int count(${tableName} record) {
-        log.info("根据条件计数 -> ${entityName}={}", JSON.toJSONString(record));
+    /**
+    * 根据条件统计信息
+    *
+    * @param record
+    * @return
+    */
+    @Override
+    public int count(${tableName} record) {
+    log.info("根据条件计数 -> ${entityName}={}", JSON.toJSONString(record));
         return ${entityName}Mapper.count(record);
-        }
-        }
+    }
+}

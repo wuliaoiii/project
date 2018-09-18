@@ -16,9 +16,64 @@
         <result column="orders" property="orders"/>
     </resultMap>
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="MenuTreeResultMap" type="com.yangy.manage.pojo.vo.MenuTree">
+        <id column="menu_id" property="menuId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="value" property="value"/>
+        <result column="url" property="url"/>
+        <result column="icon" property="icon"/>
+        <result column="status" property="status"/>
+        <result column="ctime" property="ctime"/>
+        <result column="orders" property="orders"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         menu_id, parent_id, name, type, value, url, icon, status, ctime, orders
     </sql>
+
+    <select id="selectMenuTreeByList" resultMap="MenuTreeResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        WHERE menu_id IN
+        <foreach collection="list" open="(" close=")" separator="," item="menuId">
+            #{menuId}
+        </foreach>
+    </select>
+
+    <select id="selectMenuTree" resultMap="MenuTreeResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        <where>
+            <if test="menuId != null">
+                AND menu_id =#{menuId}
+            </if>
+            <if test="parentId != null">
+                AND parent_id =#{parentId}
+            </if>
+            <if test="name != null">
+                AND name =#{name}
+            </if>
+            <if test="type != null">
+                AND type =#{type}
+            </if>
+            <if test="value != null">
+                AND value =#{value}
+            </if>
+            <if test="url != null">
+                AND url =#{url}
+            </if>
+            <if test="icon != null">
+                AND icon =#{icon}
+            </if>
+        </where>
+
+    </select>
+
 
 </mapper>

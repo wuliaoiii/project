@@ -12,6 +12,7 @@
         <module name="config" />
         <module name="design" />
         <module name="eureka" />
+        <module name="gateway" />
         <module name="generator" />
         <module name="manage" />
         <module name="mq" />

@@ -20,44 +20,37 @@ public class ${tableName}Hystrix implements ${tableName}Api {
 
     @Override
     public Result save(${tableName} ${tableName?uncap_first}){
-        return new Response
-<Object>().fail(ErrorCode.NETWORK_FAIL);
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
     }
 
     @Override
     public Result deleteById(String recordId){
-    return new Response
-    <Object>().fail(ErrorCode.NETWORK_FAIL);
-        }
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-        @Override
-        public Result deleteByIdArr(Long[] recordIdArr){
-        return new Response
-        <Object>().fail(ErrorCode.NETWORK_FAIL);
-            }
+    @Override
+    public Result deleteByIdArr(Long[] recordIdArr){
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-            @Override
-            public Result update${tableName}(${tableName} ${tableName?uncap_first}){
-            return new Response
-            <Object>().fail(ErrorCode.NETWORK_FAIL);
-                }
+    @Override
+    public Result update${tableName}(${tableName} ${tableName?uncap_first}){
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-                @Override
-                public Result find${tableName}ById(String recordId){
-                return new Response
-                <Object>().fail(ErrorCode.NETWORK_FAIL);
-                    }
+    @Override
+    public Result find${tableName}ById(String recordId){
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-                    @Override
-                    public Result find${tableName}ByIdList(Long[] recordIdArr){
-                    return new Response
-                    <Object>().fail(ErrorCode.NETWORK_FAIL);
-                        }
+    @Override
+    public Result find${tableName}ByIdList(Long[] recordIdArr){
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-                        @Override
-                        public Result find${tableName}ByParams(PageInfo<${tableName}> pageInfo){
-                        return new Response
-                        <Object>().fail(ErrorCode.NETWORK_FAIL);
-                            }
+    @Override
+    public Result find${tableName}ByParams(PageInfo<${tableName}> pageInfo){
+        return new Response<Object>().fail(ErrorCode.NETWORK_FAIL);
+    }
 
-                            }
+}

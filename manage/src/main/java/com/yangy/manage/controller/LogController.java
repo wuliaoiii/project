@@ -1,77 +1,159 @@
 package com.yangy.manage.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.yangy.common.entity.Log;
+import com.yangy.common.model.PageInfo;
 import com.yangy.common.model.Result;
-import com.yangy.manage.entity.Log;
 import com.yangy.manage.service.LogService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 操作日志 前端控制器
+ * 描述：控制层
  *
- * @author yang yang
- * @since 2018-09-04
+ * @author yangy
+ * @date 2018/09/18
  */
-@Controller
-@RequestMapping("/manage/log")
+@RestController
+@RequestMapping("/log")
 public class LogController {
 
     @Resource
     private LogService logService;
 
-    @PostMapping("save")
+    /**
+     * 创建
+     *
+     * @param log
+     * @result
+     */
+    @PostMapping("/save/log")
     public Result save(@RequestBody Log log) {
-        boolean insert = logService.insert(log);
-        return new Result<Log>().ok(log.selectById());
+        return new Result
+<Long>().ok(logService.save(log));
     }
 
-    @PostMapping("save/list")
-    public Result saveList(@RequestBody List<Log> logList) {
-        boolean insert = logService.insertBatch(logList);
-        return new Result<Boolean>().ok(insert);
+    /**
+    * 创建
+    *
+    * @param log
+    * @result
+    */
+    @PostMapping("/save/return/log")
+    public Result saveAndReturn(@RequestBody Log log) {
+    long saveResult = logService.save(log);
+    return new Result<Log>().ok(logService.findById(saveResult));
     }
 
-    @PostMapping("update")
-    public Result update(@RequestBody Log log) {
-        boolean update = logService.updateById(log);
-        return new Result<Log>().ok(log.selectById());
-    }
+    /**
+    * 批量创建
+    *
+    * @param logList
+    * @result
+    */
+    @PostMapping("/save/list")
+    public Result save(@RequestBody List<Log> logList) {
+    return new Result
+    <Integer>().ok(logService.saveList(logList));
+        }
 
-    @PostMapping("find/by/id")
-    public Result findById(@RequestParam Long recordId) {
-        Log selectOne = logService.selectById(recordId);
-        return new Result<Log>().ok(selectOne);
-    }
+        /**
+        * 根据id删除
+        *
+        * @param recordId id
+        * @result
+        */
+        @PostMapping(value = "/del/log/id")
+        public Result deleteById(@RequestParam("recordId") Long recordId) {
+        return new Result
+        <Integer>().ok(logService.del(recordId));
+            }
 
-    @PostMapping("find/first")
-    public Result findFirst(@RequestBody Log log) {
-        EntityWrapper<Log> entityWrapper = new EntityWrapper<>();
-        entityWrapper.setEntity(log);
-        Log selectOne = logService.selectOne(entityWrapper);
-        return new Result<Log>().ok(selectOne);
-    }
+            /**
+            * 根据id集合删除
+            *
+            * @param idList
+            * @result
+            */
+            @PostMapping(value = "/del/list/ids")
+            public Result deleteById(@RequestParam("idList") List
+            <Long> idList) {
+                return new Result
+                <Integer>().ok(logService.delByIdList(idList));
+                    }
 
-    @PostMapping("find/by/idList")
-    public Result findByIdList(@RequestBody List<Long> idList) {
-        List<Log> userList = logService.selectBatchIds(idList);
-        return new Result<List<Log>>().ok(userList);
-    }
+                    /**
+                    * 修改
+                    *
+                    * @param log
+                    * @result
+                    */
+                    @PostMapping(value = "/update/log")
+                    public Result update(@RequestBody Log log) {
+                    return new Result
+                    <Long>().ok(logService.update(log));
+                        }
 
-    @PostMapping("find/by/page")
-    public Result findByPage(@RequestBody Log log) {
-        Page<Log> logPage = new Page<>();
-        EntityWrapper<Log> entityWrapper = new EntityWrapper<>();
-        entityWrapper.setEntity(log);
-        Page<Log> logPageDB = logService.selectPage(logPage, entityWrapper);
-        return new Result<Page<Log>>().ok(logPageDB);
-    }
+                        /**
+                        * 修改
+                        *
+                        * @param log
+                        * @result
+                        */
+                        @PostMapping(value = "/update/return/log")
+                        public Result updateAndReturn(@RequestBody Log log) {
+                        long updateResult = logService.update(log);
+                        return new Result<Log>().ok(logService.findById(updateResult));
+                        }
 
-}
+                        /**
+                        * 根据id查询
+                        *
+                        * @param recordId
+                        * @result
+                        */
+                        @PostMapping(value = "/find/log/id")
+                        public Result findById(@RequestParam("recordId") Long recordId) {
+                        return new Result<Log>().ok(logService.findById(recordId));
+                        }
+
+                        /**
+                        * 根据id集合查询
+                        *
+                        * @param idList
+                        * @result
+                        */
+                        @PostMapping(value = "/find/list/ids")
+                        public Result findByIdList(@RequestParam("idList") List
+                        <Long> idList) {
+                            return new Result
+                            <List
+                            <Log>>().ok(logService.findByIdList(idList));
+                            }
+
+                            /**
+                            * 条件查询
+                            *
+                            * @param log
+                            * @result
+                            */
+                            @PostMapping(value = "/find/list/param")
+                            public Result findByParam(@RequestBody Log log) {
+                            return new Result
+                            <List
+                            <Log>>().ok(logService.findByParam(log));
+                            }
+
+                            /**
+                            * 分页查询
+                            *
+                            * @param pageInfo
+                            * @result
+                            */
+                            @PostMapping(value = "/find/list/page")
+                            public Result findByPage(@RequestBody PageInfo<Log> pageInfo) {
+                            return new Result
+                            <PageInfo>().ok(logService.findByPage(pageInfo));
+                                }
+                                }

@@ -53,64 +53,61 @@ public interface ${tableName}Mapper {
      * @param idList
      * @return
      */
-    int delByIdList(@Param("idList")List
-<Long> idList);
+    int delByIdList(@Param("idList")List<Long> idList);
 
     /**
-    * 修改记录
-    *
-    * @param record
-    * @return
-    */
+     * 修改记录
+     *
+     * @param record
+     * @return
+     */
     int update(${tableName} record);
 
     /**
-    * 根据主键查询记录
-    *
-    * @param id
-    * @return
-    */
-${tableName} findById(@Param("id") Long id);
+     * 根据主键查询记录
+     *
+     * @param id
+     * @return
+     */
+    ${tableName} findById(@Param("id") Long id);
 
     /**
-    * 查询满足条件的第一条记录
-    *
-    * @param record
-    * @return
-    */
-${tableName} findFirst(@Param("${entityName}")${tableName} record);
+     * 查询满足条件的第一条记录
+     *
+     * @param record
+     * @return
+     */
+    ${tableName} findFirst(@Param("${entityName}")${tableName} record);
 
     /**
-    * 根据id集合查询记录集合
-    *
-    * @param idList
-    * @return
-    */
-    List<${tableName}> findByIdList(@Param("idList")List
-    <Long> idList);
+     * 根据id集合查询记录集合
+     *
+     * @param idList
+     * @return
+     */
+    List<${tableName}> findByIdList(@Param("idList")List<Long> idList);
 
-        /**
-        * 条件查询记录集合
-        *
-        * @param record
-        * @return
-        */
-        List<${tableName}> findByParam(${tableName} record);
+    /**
+     * 条件查询记录集合
+     *
+     * @param record
+     * @return
+     */
+    List<${tableName}> findByParam(${tableName} record);
 
-        /**
-        * 分页查询
-        *
-        * @param pageInfo
-        * @return
-        */
-        List<${tableName}> findByPage(@Param("${entityName}")${tableName} ${entityName}
-        ,@Param("pageInfo")PageInfopageInfo);
+    /**
+     * 分页查询
+     *
+     * @param pageInfo
+     * @return
+     */
+    List<${tableName}> findByPage(@Param("${entityName}")${tableName} ${entityName},@Param("pageInfo")PageInfopageInfo);
 
-        /**
-        * 条件统计
-        *
-        * @param record
-        * @return
-        */
-        int count(${tableName} record);
-        }
+    /**
+     * 条件统计
+     *
+     * @param record
+     * @return
+     */
+    int count(${tableName} record);
+}

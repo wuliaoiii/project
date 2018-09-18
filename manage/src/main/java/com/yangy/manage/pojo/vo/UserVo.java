@@ -1,6 +1,5 @@
 package com.yangy.manage.pojo.vo;
 
-import com.yangy.manage.entity.Menu;
 import com.yangy.manage.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -78,6 +77,6 @@ public class UserVo {
     /**
      * 菜单列表
      */
-    private List<Menu> menuList;
+    private List<MenuTree> menuList;
 
 }

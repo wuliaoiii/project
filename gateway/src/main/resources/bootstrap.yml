@@ -1,0 +1,26 @@
+#公共配置
+server:
+  port: 9232
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  cloud:
+    config:
+      discovery:
+        service-id: config
+        enabled: true
+      uri: http://192.168.9.105/9231
+      name: base
+      profile: dev
+      username: yangy
+      password: yangy
+  application:
+    name: gateway
+registration:
+  master:
+    hostname: localhost
+    port: 9230
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${registration.master.hostname}:${registration.master.port}/eureka/

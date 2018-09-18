@@ -29,7 +29,14 @@
             <groupId>com.yangy</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                        <!--<groupId>org.springframework.cloud</groupId>-->
+                        <!--<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
+
 
         <!--shiro-->
         <dependency>
